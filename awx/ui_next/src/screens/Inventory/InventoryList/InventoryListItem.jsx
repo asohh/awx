@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useLocation, useRouteMatch } from 'react-router-dom';
 import { string, bool, func } from 'prop-types';
 import { withI18n } from '@lingui/react';
 import {
@@ -71,6 +72,8 @@ function InventoryListItem({
 
   const labelId = `check-action-${inventory.id}`;
 
+  const match = useRouteMatch();
+
   let syncStatus = 'disabled';
   if (inventory.isSourceSyncRunning) {
     syncStatus = 'syncing';
@@ -113,16 +116,40 @@ function InventoryListItem({
             </DataListCell>,
             <DataListCell key="groups-hosts-sources-counts">
               <ListGroup>
-                {i18n._(t`Groups`)}
-                <Badge isRead>{inventory.total_groups}</Badge>
+                <Link
+                  to={
+                    inventory.kind === 'smart'
+                      ? `${match.url}/smart_inventory/${inventory.id}/groups`
+                      : `${match.url}/inventory/${inventory.id}/groups`
+                  }
+                >
+                  {i18n._(t`Groups`)}
+                  <Badge isRead>{inventory.total_groups}</Badge>
+                </Link>
               </ListGroup>
               <ListGroup>
-                {i18n._(t`Hosts`)}
-                <Badge isRead>{inventory.total_hosts}</Badge>
+                <Link
+                  to={
+                    inventory.kind === 'smart'
+                      ? `${match.url}/smart_inventory/${inventory.id}/hosts`
+                      : `${match.url}/inventory/${inventory.id}/hosts`
+                  }
+                >
+                  {i18n._(t`Hosts`)}
+                  <Badge isRead>{inventory.total_hosts}</Badge>
+                </Link>
               </ListGroup>
               <ListGroup>
-                {i18n._(t`Sources`)}
-                <Badge isRead>{inventory.total_inventory_sources}</Badge>
+                <Link
+                  to={
+                    inventory.kind === 'smart'
+                      ? `${match.url}/smart_inventory/${inventory.id}/sources`
+                      : `${match.url}/inventory/${inventory.id}/sources`
+                  }
+                >
+                  {i18n._(t`Sources`)}
+                  <Badge isRead>{inventory.total_inventory_sources}</Badge>
+                </Link>
               </ListGroup>
             </DataListCell>,
             inventory.pending_deletion && (
