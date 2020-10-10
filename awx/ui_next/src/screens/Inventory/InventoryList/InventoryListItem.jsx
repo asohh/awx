@@ -35,8 +35,9 @@ const Badge = styled(PFBadge)`
   margin-left: 8px;
 `;
 
-const ListGroup = styled.span`
-  margin-left: 24px;
+const ListGroup = styled.div`
+  margin-left: 8px;
+ display: inline-block;
 `;
 
 function InventoryListItem({
@@ -115,7 +116,7 @@ function InventoryListItem({
                 : i18n._(t`Inventory`)}
             </DataListCell>,
             <DataListCell key="groups-hosts-sources-counts">
-              <ListGroup>
+              <ListGroup>  
                 <Link
                   to={
                     inventory.kind === 'smart'
